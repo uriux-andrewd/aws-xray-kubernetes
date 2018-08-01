@@ -32,9 +32,9 @@ APP_TEMPLATE=$(cat  <(cat ${DIR}/demo-app/k8s-deploy.yaml))
 
 
 # Replace Placholders with Configured Values
-APP_TEMPLATE=$(cat  <(sed 's|{IMAGE_TAG}|'"${APP_VERSION}"'|g'  <(echo "${APP_TEMPLATE}")))
-APP_TEMPLATE=$(cat  <(sed 's|{APP_REPO_A}|'"${APP_REPO_A}"'|g'  <(echo "${APP_TEMPLATE}")))
-APP_TEMPLATE=$(cat  <(sed 's|{APP_REPO_B}|'"${APP_REPO_B}"'|g'  <(echo "${APP_TEMPLATE}")))
+APP_TEMPLATE=$(cat  <(sed 's|IMAGE_TAG|'"${APP_VERSION}"'|g'  <(echo "${APP_TEMPLATE}")))
+APP_TEMPLATE=$(cat  <(sed 's|APP_REPO_A|'"${APP_REPO_A}"'|g'  <(echo "${APP_TEMPLATE}")))
+APP_TEMPLATE=$(cat  <(sed 's|APP_REPO_B|'"${APP_REPO_B}"'|g'  <(echo "${APP_TEMPLATE}")))
 
 echo -e "${APP_TEMPLATE}"
 }
@@ -45,7 +45,7 @@ function getDaemonDeployment () {
 DAEMON_TEMPLATE=$(cat  <(cat ${DIR}/xray-daemon/xray-k8s-daemonset.yaml))
 
 # Replace Placholders with Configured Values
-DAEMON_TEMPLATE=$(cat  <(sed 's|{DAEMON_REPO}|'"${DAEMON_REPO}"'|g'  <(echo "${DAEMON_TEMPLATE}")))
+DAEMON_TEMPLATE=$(cat  <(sed 's|DAEMON_REPO|'"${DAEMON_REPO}"'|g'  <(echo "${DAEMON_TEMPLATE}")))
 
 # output
 echo -e "${DAEMON_TEMPLATE}"
@@ -59,6 +59,12 @@ echo -e "${DAEMON_TEMPLATE}"
 
 
 	APP_VERSION=$1
+
+
+
+
+
+
 
 	# build
 	docker build -t "${APP_REPO_A}":${APP_VERSION}  ${DIR}/demo-app/service-a/
