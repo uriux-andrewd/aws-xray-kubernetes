@@ -55,23 +55,23 @@ echo -e "${DAEMON_TEMPLATE}"
 
 
 
-
+: ${1?"Usage: $0 Missing Version (Docker Tag), Usage: build-apps.sh version"}
 
 
 	APP_VERSION=$1
 
 	# build
-	docker build -t stackdriveraws/xray-demo-service-a:${APP_VERSION}  ${DIR}/demo-app/service-a/
-	docker build -t stackdriveraws/xray-demo-service-b:${APP_VERSION}  ${DIR}/demo-app/service-b/
-	docker build -t stackdriveraws/xray-daemon:latest ${DIR}/xray-daemon/
+	docker build -t "${APP_REPO_A}":${APP_VERSION}  ${DIR}/demo-app/service-a/
+	docker build -t "${APP_REPO_B}":${APP_VERSION}  ${DIR}/demo-app/service-b/
+	docker build -t "${DAEMON_REPO}":latest ${DIR}/xray-daemon/
 
 
 
 	# container registry
 	dockerLogin
-	docker push stackdriveraws/xray-daemon:latest
-	docker push stackdriveraws/xray-demo-service-a:${APP_VERSION}
-	docker push stackdriveraws/xray-demo-service-b:${APP_VERSION}
+	docker push "${DAEMON_REPO}":latest
+	docker push "${APP_REPO_A}":${APP_VERSION}
+	docker push "${APP_REPO_B}":${APP_VERSION}
 
 	# deploy
 	# kubectl apply -f ${DIR}/xray-deamon/xray-k8s-daemonset.yaml

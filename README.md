@@ -33,7 +33,7 @@ Provides a simple way to redeploy new images for the [aws-xray-kubernetes](https
 
 **Rebuild and deploy**
 
-    ./build-apps.sh
+    ./build-apps.sh  v3
 
 
 
